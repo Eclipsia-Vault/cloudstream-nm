@@ -1,4 +1,4 @@
-package com.horis.cncverse.entities
+package com.eclipsia.entities
 
 data class SearchData(
     val head: String,
