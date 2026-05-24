@@ -1,4 +1,4 @@
-package com.horis.cncverse
+package com.eclipsia
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
@@ -100,7 +100,7 @@ suspend fun bypass(mainUrl: String): String {
             "Content-Type" to "application/x-www-form-urlencoded",
             "Origin" to "https://net22.cc",
             "Referer" to "https://net22.cc/verify2",
-            "sec-ch-ua" to "\"Google Chrome\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"",
+            "sec-ch-ua" to "\"Google Chrome\";v=\"148\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"148\"",
             "sec-ch-ua-mobile" to "?0",
             "sec-ch-ua-platform" to "\"Windows\"",
             "Sec-Fetch-Dest" to "document",
@@ -108,7 +108,7 @@ suspend fun bypass(mainUrl: String): String {
             "Sec-Fetch-Site" to "same-origin",
             "Sec-Fetch-User" to "?1",
             "Upgrade-Insecure-Requests" to "1",
-            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
+            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
         )
         val formBody = FormBody.Builder()
             .add("g-recaptcha-response", UUID.randomUUID().toString())
@@ -151,7 +151,7 @@ val newTvBaseHeaders = mapOf(
     "Pragma" to "no-cache",
     "Expires" to "0",
     "X-Requested-With" to "NetmirrorNewTV v1.0",
-    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:136.0) Gecko/20100101 Firefox/136.0 /OS.GatuNewTV v1.0",
+    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0 /OS.GatuNewTV v1.0",
     "Accept" to "application/json, text/plain, */*"
 )
 
