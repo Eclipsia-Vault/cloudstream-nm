@@ -1,4 +1,4 @@
-package eclipsia
+package com.eclipsia
 
 import android.content.Context
 import android.content.SharedPreferences
