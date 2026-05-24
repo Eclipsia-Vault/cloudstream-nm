@@ -1,4 +1,4 @@
-package com.horis.cncverse
+package eclipsia
 
 import android.content.Context
 import android.content.SharedPreferences
