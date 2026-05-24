@@ -1,6 +1,5 @@
 name: Build
 
-# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrecy
 concurrency: 
   group: "build"
   cancel-in-progress: true
