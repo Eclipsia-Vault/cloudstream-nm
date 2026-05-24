@@ -1,5 +1,5 @@
 // use an integer for version numbers
-version = 63
+version = 64
 
 android {
     buildFeatures {
@@ -14,11 +14,11 @@ dependencies {
 }
 
 cloudstream {
-    language = "ta"
+    language = "en"
     // All of these properties are optional, you can safely remove them
 
-    description = "Netflix, PrimeVideo, Disney+ Hotstar Contents in Multiple Languages"
-    authors = listOf("NivinCNC")
+    description = "Netflix, PrimeVideo, Disney+ Hotstar"
+    authors = listOf("Eclipsia")
 
     /**
      * Status int as the following:
@@ -35,5 +35,5 @@ cloudstream {
 
     requiresResources = true
 
-    iconUrl = "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/CNC%20Verse/icon.png"
+    iconUrl = "https://raw.githubusercontent.com/eclipsia-404/cloudstream/refs/heads/main/Netmirror/icon.png"
 }
