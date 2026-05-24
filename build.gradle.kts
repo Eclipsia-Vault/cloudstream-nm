@@ -53,12 +53,12 @@ subprojects {
     apply(plugin = "com.lagradost.cloudstream3.gradle")
 
     cloudstream {
-        setRepo(System.getenv("GITHUB_REPOSITORY") ?: "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension")
-        authors = listOf("NivinCNC")
+        setRepo(System.getenv("GITHUB_REPOSITORY") ?: "https://github.com/eclipsia-404/cloudstream")
+        authors = listOf("Eclipsia")
     }
 
     android {
-        namespace = "com.cncverse"
+        namespace = "com.eclipsia"
 
         defaultConfig {
             minSdk = 21
@@ -71,7 +71,7 @@ subprojects {
             buildConfigField("String", "CASTLE_SUFFIX", "\"${getSecret("CASTLE_SUFFIX")}\"")
             buildConfigField("String", "SIMKL_API", "\"${getSecret("SIMKL_API")}\"")
             buildConfigField("String", "MAL_API", "\"${getSecret("MAL_API")}\"")
-            buildConfigField("String", "LIBRARY_PACKAGE_NAME", "\"com.cncverse\"")
+            buildConfigField("String", "LIBRARY_PACKAGE_NAME", "\"com.eclipsia\"")
             buildConfigField("String", "CRICIFY_PROVIDER_SECRET1", "\"${getSecret("CRICIFY_PROVIDER_SECRET1")}\"")
             buildConfigField("String", "CRICIFY_PROVIDER_SECRET2", "\"${getSecret("CRICIFY_PROVIDER_SECRET2")}\"")
             buildConfigField("String", "PIKASHOW_API_KEY", "\"${getSecret("PIKASHOW_API_KEY")}\"")
