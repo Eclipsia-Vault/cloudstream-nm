@@ -1,4 +1,4 @@
-package com.horis.cncverse.entities
+package com.eclipsia.entities
 
 data class Season(
     val ep: String,
