@@ -1,4 +1,4 @@
-package com.horis.cncverse
+package com.eclipsia
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,7 @@ import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 import com.lagradost.cloudstream3.plugins.Plugin
 
 @CloudstreamPlugin
-open class CNCVersePlugin: Plugin() {
+open class EclipsiaPlugin: Plugin() {
     override fun load(context: Context) {
         // All providers should be added in this manner. Please don't edit the providers list directly.
         NetflixMirrorStorage.init(context.applicationContext)
@@ -17,7 +17,7 @@ open class CNCVersePlugin: Plugin() {
         registerMainAPI(NetflixMirrorProvider())
         registerMainAPI(PrimeVideoMirrorProvider())
         registerMainAPI(HotStarMirrorProvider())
-        val sharedPref = context.getSharedPreferences("CNCVerseStudios", Context.MODE_PRIVATE)
+        val sharedPref = context.getSharedPreferences("EclipsiaStudios", Context.MODE_PRIVATE)
         val studioOptions = listOf(
             StudioOption("studio_disney", "Disney", "disney"),
             StudioOption("studio_marvel", "Marvel", "marvel"),
@@ -39,8 +39,8 @@ open class CNCVersePlugin: Plugin() {
 
         val activity = context as AppCompatActivity
         openSettings = {
-            val frag = CNCVerseSettings(this, sharedPref, studioOptions)
-            frag.show(activity.supportFragmentManager, "CNCVerseSettings")
+            val frag = EclipsiaSettings(this, sharedPref, studioOptions)
+            frag.show(activity.supportFragmentManager, "EclipsiaSettings")
         }
     }
 
