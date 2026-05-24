@@ -1,9 +1,9 @@
-﻿package com.horis.cncverse
+﻿package com.eclipsia
 
 import android.content.Context
-import com.horis.cncverse.entities.EpisodesData
-import com.horis.cncverse.entities.PostData
-import com.horis.cncverse.entities.SearchData
+import com.eclipsia.entities.EpisodesData
+import com.eclipsia.entities.PostData
+import com.eclipsia.entities.SearchData
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
@@ -25,7 +25,7 @@ class PrimeVideoMirrorProvider : MainAPI() {
         TvType.Anime,
         TvType.AsianDrama
     )
-    override var lang = "ta"
+    override var lang = "en"
 
     override var mainUrl = "https://net52.cc"
     override var name = "Prime Video"
@@ -37,7 +37,7 @@ class PrimeVideoMirrorProvider : MainAPI() {
         "Accept-Language" to "en-IN,en-US;q=0.9,en;q=0.8",
         "Cache-Control" to "max-age=0",
         "Connection" to "keep-alive",
-        "sec-ch-ua" to "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Android WebView\";v=\"144\"",
+        "sec-ch-ua" to "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"148\", \"Android WebView\";v=\"148\"",
         "sec-ch-ua-mobile" to "?0",
         "sec-ch-ua-platform" to "\"Android\"",
         "Sec-Fetch-Dest" to "document",
@@ -45,12 +45,12 @@ class PrimeVideoMirrorProvider : MainAPI() {
         "Sec-Fetch-Site" to "same-origin",
         "Sec-Fetch-User" to "?1",
         "Upgrade-Insecure-Requests" to "1",
-        "User-Agent" to "Mozilla/5.0 (Linux; Android 13; Pixel 5 Build/TQ3A.230901.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/144.0.7559.132 Safari/537.36 /OS.Gatu v3.0",
+        "User-Agent" to "Mozilla/5.0 (Linux; Android 13; Pixel 5 Build/TQ3A.230901.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/148.0.7778.179 Safari/537.36 /OS.Gatu v3.0",
         "X-Requested-With" to "XMLHttpRequest"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse? {
-        // Show star popup on first visit (shared across all CNCVerse plugins)
+        // Show star popup on first visit (shared across all Eclipsia plugins)
         context?.let { StarPopupHelper.showStarPopupIfNeeded(it) }
         
         cookie_value = if(cookie_value.isEmpty()) bypass(mainUrl) else cookie_value
