@@ -1,4 +1,4 @@
-package com.horis.cncverse
+package com.eclipsia
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -20,11 +20,11 @@ import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lagradost.cloudstream3.CommonActivity.showToast
 
-// Studio toggle entry for CNCVerse
+// Studio toggle entry for Eclipsia
 data class StudioOption(val key: String, val label: String, val cookieValue: String)
 
-class CNCVerseSettings(
-    private val plugin: CNCVersePlugin,
+class EclipsiaSettings(
+    private val plugin: EclipsiaPlugin,
     private val sharedPref: SharedPreferences?,
     private val studios: List<StudioOption>
 ) : BottomSheetDialogFragment() {
@@ -56,7 +56,7 @@ class CNCVerseSettings(
     @SuppressLint("DiscouragedApi")
     @Suppress("SameParameterValue")
     private fun getDrawable(name: String): Drawable? {
-        val id = plugin.resources?.getIdentifier(name, "drawable", "com.cncverse")
+        val id = plugin.resources?.getIdentifier(name, "drawable", "com.eclipsia")
         return id?.let { ResourcesCompat.getDrawable(plugin.resources ?: return null, it, null) }
     }
 
@@ -64,14 +64,14 @@ class CNCVerseSettings(
     @SuppressLint("DiscouragedApi")
     @Suppress("SameParameterValue")
     private fun getString(name: String): String? {
-        val id = plugin.resources?.getIdentifier(name, "string", "com.cncverse")
+        val id = plugin.resources?.getIdentifier(name, "string", "com.eclipsia")
         return id?.let { plugin.resources?.getString(it) }
     }
 
     // Generic findView function to find views by name
     @SuppressLint("DiscouragedApi")
     private fun <T : View> View.findViewByName(name: String): T? {
-        val id = plugin.resources?.getIdentifier(name, "id", "com.cncverse")
+        val id = plugin.resources?.getIdentifier(name, "id", "com.eclipsia")
         return findViewById(id ?: return null)
     }
 
@@ -81,7 +81,7 @@ class CNCVerseSettings(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val layoutId = plugin.resources?.getIdentifier("settings", "layout", "com.cncverse")
+        val layoutId = plugin.resources?.getIdentifier("settings", "layout", "com.eclipsia")
         return layoutId?.let {
             inflater.inflate(plugin.resources?.getLayout(it), container, false)
         }
@@ -147,7 +147,7 @@ class CNCVerseSettings(
     }
 
     private fun getStudioRow(option: StudioOption): RelativeLayout {
-        val relativeLayout = RelativeLayout(this@CNCVerseSettings.requireContext()).apply {
+        val relativeLayout = RelativeLayout(this@EclipsiaSettings.requireContext()).apply {
             layoutParams = RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT
@@ -155,7 +155,7 @@ class CNCVerseSettings(
             setPadding(0, 0, 0, 8)
         }
 
-        val checkBox = CheckBox(this@CNCVerseSettings.requireContext()).apply {
+        val checkBox = CheckBox(this@EclipsiaSettings.requireContext()).apply {
             id = View.generateViewId()
             layoutParams = RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -166,7 +166,7 @@ class CNCVerseSettings(
             }
         }
 
-        val textView = TextView(this@CNCVerseSettings.requireContext()).apply {
+        val textView = TextView(this@EclipsiaSettings.requireContext()).apply {
             id = View.generateViewId()
             text = option.label
             textSize = 16f
