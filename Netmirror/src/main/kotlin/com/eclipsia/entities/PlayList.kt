@@ -1,3 +1,3 @@
-package com.horis.cncverse.entities
+package com.eclipsia.entities
 
 class PlayList : ArrayList<PlayListItem>()
