@@ -21,7 +21,7 @@ class CinefreakPlugin: BasePlugin() {
 
     companion object {
         private const val DOMAINS_URL =
-            "https://raw.githubusercontent.com/phisher98/TVVVV/refs/heads/main/domains.json"
+            "https://codeberg.org/eclipsia-404/eclipsia/raw/branch/main/domains.json"
         var cachedDomains: Domains? = null
 
         suspend fun getDomains(forceRefresh: Boolean = false): Domains? {
