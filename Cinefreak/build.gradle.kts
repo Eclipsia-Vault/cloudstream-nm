@@ -20,7 +20,7 @@ cloudstream {
         "Anime"
     )
     language = "bn"
-    iconUrl = "https://raw.githubusercontent.com/eclipsia-404/cloudstream/refs/heads/main/Cinefreak/icon.png"
+    iconUrl = "https://codeberg.org/eclipsia/eclipsia-cloudstream/src/branch/main/icons/cinefreak.png"
 
     isCrossPlatform = true
 }
