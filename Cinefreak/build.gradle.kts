@@ -1,7 +1,6 @@
 // use an integer for version numbers
 version = 5
 
-
 cloudstream {
     authors = listOf("eclipsia")
     description ="Bangla,Hindi Movies & Series"
