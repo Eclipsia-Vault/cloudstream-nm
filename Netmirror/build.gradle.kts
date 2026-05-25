@@ -35,5 +35,5 @@ cloudstream {
 
     requiresResources = true
 
-    iconUrl = "https://raw.githubusercontent.com/eclipsia-404/cloudstream/refs/heads/main/Netmirror/icon.png"
+    iconUrl = "https://codeberg.org/eclipsia/eclipsia-cloudstream/raw/branch/main/icons/netmirror.png"
 }
