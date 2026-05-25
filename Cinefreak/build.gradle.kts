@@ -1,10 +1,10 @@
 // use an integer for version numbers
-version = 3
+version = 4
 
 
 cloudstream {
-    authors = listOf("Phisher98")
-    description ="Bangla/Hindi Movies/Series"
+    authors = listOf("eclipsia")
+    description ="Bangla,Hindi Movies & Series"
     /**
     * Status int as the following:
     * 0: Down
@@ -20,7 +20,7 @@ cloudstream {
         "Anime"
     )
     language = "bn"
-    iconUrl = "https://raw.githubusercontent.com/phisher98/TVVVV/refs/heads/main/Icons/cinefreak.png"
+    iconUrl = "https://raw.githubusercontent.com/eclipsia-404/cloudstream/refs/heads/main/Cinefreak/icon.png"
 
     isCrossPlatform = true
 }
