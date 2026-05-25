@@ -55,33 +55,21 @@ open class Cinefreak : MainAPI() {
     )
     companion object
     {
-        const val TMDBAPIKEY = "1865f43a0549ca50d341dd9ab8b29f49"
+        const val TMDBAPIKEY = "816727c0a607e583d6cc68d65a768398"
         const val TMDBBASE = "https://image.tmdb.org/t/p/original"
         const val TMDBAPI = "https://api.themoviedb.org/3"
     }
 
     override val mainPage = mainPageOf(
         "" to "Home",
-        "animation" to "Animation",
-        "bangla-movies" to "Bangla Movies",
-        "bangla-dubbed" to "Bangla Dubbed",
-        "chinese" to "Chinese",
-        "dual-audio" to "Dual Audio",
         "english-movies" to "English Movies",
+        "bangla-movies" to "Bangla Movies",
         "hindi-movies" to "Hindi Movies",
         "hindi-dubbed-movies" to "Hindi Dubbed Movies",
         "japanese" to "Japanese",
         "k-drama" to "K-Drama",
-        "korean" to "Korean",
-        "kannada" to "Kannada",
-        "telugu" to "Telugu",
-        "tamil" to "Tamil",
-        "malayalam" to "Malayalam",
-        "indonesian" to "Indonesian",
-        "others" to "Others",
-        "spanish" to "Spanish",
     )
-    private val headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0","Cookie" to "xla=s4t")
+    private val headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36","Cookie" to "xla=s4t")
 
     override suspend fun getMainPage(
         page: Int, request: MainPageRequest
@@ -114,7 +102,7 @@ open class Cinefreak : MainAPI() {
             .orEmpty()
 
         return results.map { obj ->
-            val href = if (obj.l.startsWith("http")) {
+            val href = if (obj.l.startsWith("https")) {
                 obj.l
             } else {
                 "$mainUrl/${obj.l}/"
@@ -562,7 +550,7 @@ open class Cinefreak : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        Log.d("Phisher",data)
+        Log.d("Eclipsia",data)
 
         val links = mutableMapOf<String, String>()
         tryParseJson<Map<String, Any>>(data)
