@@ -66,32 +66,9 @@ subprojects {
             targetSdk = 35
 
             // Inject secrets into BuildConfig
-            buildConfigField("String", "MOVIEBOX_SECRET_KEY_DEFAULT", "\"${getSecret("MOVIEBOX_SECRET_KEY_DEFAULT")}\"")
-            buildConfigField("String", "MOVIEBOX_SECRET_KEY_ALT", "\"${getSecret("MOVIEBOX_SECRET_KEY_ALT")}\"")
-            buildConfigField("String", "CASTLE_SUFFIX", "\"${getSecret("CASTLE_SUFFIX")}\"")
             buildConfigField("String", "SIMKL_API", "\"${getSecret("SIMKL_API")}\"")
             buildConfigField("String", "MAL_API", "\"${getSecret("MAL_API")}\"")
             buildConfigField("String", "LIBRARY_PACKAGE_NAME", "\"com.eclipsia\"")
-            buildConfigField("String", "CRICIFY_PROVIDER_SECRET1", "\"${getSecret("CRICIFY_PROVIDER_SECRET1")}\"")
-            buildConfigField("String", "CRICIFY_PROVIDER_SECRET2", "\"${getSecret("CRICIFY_PROVIDER_SECRET2")}\"")
-            buildConfigField("String", "PIKASHOW_API_KEY", "\"${getSecret("PIKASHOW_API_KEY")}\"")
-            buildConfigField("String", "PIKASHOW_HMAC_SECRET", "\"${getSecret("PIKASHOW_HMAC_SECRET")}\"")
-            buildConfigField("String", "CRICFY_FIREBASE_API_KEY", "\"${getSecret("CRICFY_FIREBASE_API_KEY")}\"")
-            buildConfigField("String", "CRICFY_FIREBASE_APP_ID", "\"${getSecret("CRICFY_FIREBASE_APP_ID")}\"")
-            buildConfigField("String", "CRICFY_FIREBASE_PROJECT_NUMBER", "\"${getSecret("CRICFY_FIREBASE_PROJECT_NUMBER")}\"")
-            buildConfigField("String", "SKLIVE_KEY", "\"${getSecret("SKLIVE_KEY")}\"")
-            buildConfigField("String", "SKLIVE_IV", "\"${getSecret("SKLIVE_IV")}\"")
-            buildConfigField("String", "SKLIVE_V23_KEY", "\"${getSecret("SKLIVE_V23_KEY")}\"")
-            buildConfigField("String", "SKLIVE_V23_IV", "\"${getSecret("SKLIVE_V23_IV")}\"")
-            buildConfigField("String", "SKTECH_FIREBASE_API_KEY", "\"${getSecret("SKTECH_FIREBASE_API_KEY")}\"")
-            buildConfigField("String", "SKTECH_FIREBASE_APP_ID", "\"${getSecret("SKTECH_FIREBASE_APP_ID")}\"")
-            buildConfigField("String", "SKTECH_FIREBASE_PROJECT_NUMBER", "\"${getSecret("SKTECH_FIREBASE_PROJECT_NUMBER")}\"")
-            buildConfigField("String", "CINETV_SECRET_KEY_ENCRYPTED", "\"${getSecret("CINETV_SECRET_KEY_ENCRYPTED")}\"")
-            buildConfigField("String", "CINETV_DES_KEY", "\"${getSecret("CINETV_DES_KEY")}\"")
-            buildConfigField("String", "CINETV_DES_IV", "\"${getSecret("CINETV_DES_IV")}\"")
-            buildConfigField("String", "CINETV_AES_KEY", "\"${getSecret("CINETV_AES_KEY")}\"")
-            buildConfigField("String", "CINETV_AES_IV", "\"${getSecret("CINETV_AES_IV")}\"")
-            buildConfigField("String", "CINETV_WS_SECRET", "\"${getSecret("CINETV_WS_SECRET")}\"")
         }
 
         compileOptions {
