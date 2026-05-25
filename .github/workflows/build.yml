@@ -31,7 +31,6 @@ jobs:
       - name: Clean old builds
         run: |
           rm $GITHUB_WORKSPACE/builds/*.cs3 || true
-          rm $GITHUB_WORKSPACE/builds/*.jar || true
 
       - name: Setup Java
         uses: actions/setup-java@v5
