@@ -127,7 +127,7 @@ class EclipsiaSettings(
                 }
                 .setNegativeButton("No") { dialog, _ ->
                     dialog.dismiss()
-                    showToast("Settings saved. Restart app to apply changes.")
+                    showToast("Settings saved, Restart app to apply changes.")
                 }
                 .show()
         }
