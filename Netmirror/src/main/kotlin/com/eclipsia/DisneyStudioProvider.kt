@@ -1,8 +1,8 @@
 ﻿package com.eclipsia
 
 import android.content.Context
-import com.horis.eclipsia.entities.EpisodesData
-import com.horis.eclipsia.entities.PostData
+import com.eclipsia.entities.EpisodesData
+import com.eclipsia.entities.PostData
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
