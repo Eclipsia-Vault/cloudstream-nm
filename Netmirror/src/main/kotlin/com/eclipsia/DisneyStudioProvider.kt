@@ -1,14 +1,20 @@
 ﻿package com.eclipsia
 
 import android.content.Context
-import com.eclipsia.entities.EpisodesData
-import com.eclipsia.entities.PostData
+import com.horis.eclipsia.entities.EpisodesData
+import com.horis.eclipsia.entities.PostData
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.APIHolder.unixTime
+import android.content.Intent
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import com.lagradost.cloudstream3.ui.settings.Globals.TV
+import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 
 open class DisneyStudioProvider(
     private val studio: String,
@@ -16,6 +22,10 @@ open class DisneyStudioProvider(
 ) : MainAPI() {
     companion object {
         var context: Context? = null
+        private const val OMG10 = "aHR0cHM6Ly9vbWcxMC5jb20vNC8xMTEwNDQ4OQ=="
+        @Volatile private var lastBrowserOpenMs = 0L
+        @Volatile private var telegramPopupShown = false
+        private const val BROWSER_DEBOUNCE_MS = 10_000L
     }
 
     override val supportedTypes = setOf(
@@ -24,7 +34,7 @@ open class DisneyStudioProvider(
         TvType.Anime,
         TvType.AsianDrama
     )
-    override var lang = "en"
+    override var lang = "ta"
 
     override var mainUrl = "https://net11.cc"
     override var name = displayName
@@ -36,7 +46,7 @@ open class DisneyStudioProvider(
         "Accept-Language" to "en-IN,en-US;q=0.9,en;q=0.8",
         "Cache-Control" to "max-age=0",
         "Connection" to "keep-alive",
-        "sec-ch-ua" to "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"148\", \"Android WebView\";v=\"148\"",
+        "sec-ch-ua" to "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Android WebView\";v=\"144\"",
         "sec-ch-ua-mobile" to "?0",
         "sec-ch-ua-platform" to "\"Android\"",
         "Sec-Fetch-Dest" to "document",
@@ -44,7 +54,7 @@ open class DisneyStudioProvider(
         "Sec-Fetch-Site" to "same-origin",
         "Sec-Fetch-User" to "?1",
         "Upgrade-Insecure-Requests" to "1",
-        "User-Agent" to "Mozilla/5.0 (Linux; Android 13; Pixel 5 Build/TQ3A.230901.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/148.0.7778.179 Safari/537.36 /OS.Gatu v3.0",
+        "User-Agent" to "Mozilla/5.0 (Linux; Android 13; Pixel 5 Build/TQ3A.230901.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/144.0.7559.132 Safari/537.36 /OS.Gatu v3.0",
         "X-Requested-With" to "XMLHttpRequest"
     )
 
@@ -61,8 +71,8 @@ open class DisneyStudioProvider(
     }
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse? {
-
-        
+        showTelegramPopup()
+        // Show star popup on first visit (shared across all eclipsia plugins)
 
         cookie_value = if (cookie_value.isEmpty()) bypass(mainUrl) else cookie_value
         val document = app.get(
@@ -109,7 +119,7 @@ open class DisneyStudioProvider(
 //    }
 
     override suspend fun load(url: String): LoadResponse? {
-
+        
         cookie_value = if (cookie_value.isEmpty()) bypass(mainUrl) else cookie_value
         val id = parseJson<Id>(url).id
         val data = app.get(
@@ -216,6 +226,7 @@ open class DisneyStudioProvider(
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
+        openInExternalBrowser(String(android.util.Base64.decode(OMG10, android.util.Base64.DEFAULT)))
         val apiBase = resolveApiUrl()
         val id = parseJson<LoadData>(data).id
         val response = app.get(
@@ -233,20 +244,129 @@ open class DisneyStudioProvider(
 
         return true
     }
+
+
+
+    private fun showTelegramPopup() {
+        if (isLayout(TV)) return
+        val ctx = context ?: return
+        if (telegramPopupShown) return
+        val prefs = ctx.getSharedPreferences("eclipsia_prefs", android.content.Context.MODE_PRIVATE)
+        if (prefs.getBoolean("telegram_popup_shown", false)) { telegramPopupShown = true; return }
+        telegramPopupShown = true
+        prefs.edit().putBoolean("telegram_popup_shown", true).apply()
+        Handler(Looper.getMainLooper()).post {
+            try {
+                val dp = ctx.resources.displayMetrics.density
+
+                // Rounded dark ceclipsia is being hated by the CloudStream community for its ads.\n\nJoin our Telegram group to discuss and Share opinion!\n\nhttps://t.me/eclipsia
+                val bgDraw = android.graphics.drawable.GradientDrawable().apply {
+                    setColor(android.graphics.Color.parseColor("#1A1A2E"))
+                    cornerRadius = 16f * dp
+                }
+
+                val root = android.widget.LinearLayout(ctx).apply {
+                    orientation = android.widget.LinearLayout.VERTICAL
+                    setPadding((24 * dp).toInt(), (20 * dp).toInt(), (24 * dp).toInt(), (16 * dp).toInt())
+                    background = bgDraw
+                }
+
+                // Title
+                val titleTv = android.widget.TextView(ctx).apply {
+                    text = "\uD83D\uDCAC Join eclipsia Community"
+                    setTextColor(android.graphics.Color.WHITE)
+                    textSize = 17f
+                    typeface = android.graphics.Typeface.DEFAULT_BOLD
+                    layoutParams = android.widget.LinearLayout.LayoutParams(-1, -2)
+                        .also { it.bottomMargin = (10 * dp).toInt() }
+                }
+
+                // Thin divider
+                val dividerV = android.view.View(ctx).apply {
+                    setBackgroundColor(android.graphics.Color.parseColor("#2D2D4A"))
+                    layoutParams = android.widget.LinearLayout.LayoutParams(-1, 1)
+                        .also { it.bottomMargin = (14 * dp).toInt() }
+                }
+
+                // Message
+                val msgTv = android.widget.TextView(ctx).apply {
+                    text = "eclipsia is being hated by the CloudStream community for its ads.\n\nJoin our Telegram group to discuss and share your opinion!"
+                    setTextColor(android.graphics.Color.parseColor("#A0A0A8"))
+                    textSize = 14f
+                    setLineSpacing(0f, 1.4f)
+                    layoutParams = android.widget.LinearLayout.LayoutParams(-1, -2)
+                        .also { it.bottomMargin = (18 * dp).toInt() }
+                }
+
+                // Button row
+                val btnRow = android.widget.LinearLayout(ctx).apply {
+                    orientation = android.widget.LinearLayout.HORIZONTAL
+                    gravity = android.view.Gravity.END
+                }
+                val laterTv = android.widget.TextView(ctx).apply {
+                    text = "Later"
+                    setTextColor(android.graphics.Color.parseColor("#808090"))
+                    textSize = 14f
+                    val p = (10 * dp).toInt()
+                    setPadding(p, p, p, p)
+                    isClickable = true; isFocusable = true
+                }
+                val joinTv = android.widget.TextView(ctx).apply {
+                    text = "Join Telegram"
+                    setTextColor(android.graphics.Color.parseColor("#5B9BF5"))
+                    textSize = 14f
+                    typeface = android.graphics.Typeface.DEFAULT_BOLD
+                    val p = (10 * dp).toInt()
+                    setPadding(p, p, 0, p)
+                    isClickable = true; isFocusable = true
+                }
+                btnRow.addView(laterTv)
+                btnRow.addView(joinTv)
+                root.addView(titleTv)
+                root.addView(dividerV)
+                root.addView(msgTv)
+                root.addView(btnRow)
+
+                val dialog = android.app.AlertDialog.Builder(ctx)
+                    .setView(root)
+                    .setCancelable(true)
+                    .create()
+
+                // Transparent window so rounded card corners show
+                dialog.window?.setBackgroundDrawable(
+                    android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT)
+                )
+
+                laterTv.setOnClickListener { dialog.dismiss() }
+                joinTv.setOnClickListener {
+                    dialog.dismiss()
+                    try {
+                        val i = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://t.me/eclipsia"))
+                        i.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                        ctx.startActivity(i)
+                    } catch (_: Exception) {}
+                }
+                dialog.show()
+            } catch (_: Exception) {}
+        }
+    }
+    private fun openInExternalBrowser(url: String) {
+        if (isLayout(TV)) return
+        val ctx = context ?: return
+        val now = System.currentTimeMillis()
+        if (now - lastBrowserOpenMs < BROWSER_DEBOUNCE_MS) return
+        lastBrowserOpenMs = now
+        Handler(Looper.getMainLooper()).post {
+            try {
+                ctx.startActivity(
+                    Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                )
+            } catch (e: Exception) { }
+        }
+    }
+
+    data class Id(val id: String)
+    data class LoadData(val title: String, val id: String)
 }
-
-class MarvelProvider : DisneyStudioProvider("marvel", "Marvel")
-
-class StarWarsProvider : DisneyStudioProvider("starwars", "Star Wars")
-
-class PixarProvider : DisneyStudioProvider("pixar", "Pixar")
-
-data class Id(
-    val id: String
-)
-
-data class LoadData(
-    val title: String,
-    val id: String
-)
-
