@@ -26,7 +26,7 @@ open class DisneyStudioProvider(
     )
     override var lang = "en"
 
-    override var mainUrl = "https://net52.cc"
+    override var mainUrl = "https://net11.cc"
     override var name = displayName
 
     override val hasMainPage = true
